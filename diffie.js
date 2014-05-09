@@ -16,14 +16,12 @@ var i=0;
 // g is base
 // p is modulus
 function DHParty(p,g) {
-  var secretKey = Math.floor(Math.random()*16);// secret seed is a secret between 0 and 15
- secretKey = (i++==0)?6:15 // redefine for testing
-    var
+  var secretKey = Math.floor(Math.random()*16),// secret seed is a secret between 0 and 15
     // (g^n) mod function
-    process = function(g,n,p) {
-      console.log('computing g to the n mod p', g, n, p)
-      return Math.pow(g,n)%p; },
+    process = function(g,n,p) { return Math.pow(g,n)%p; },
     publicKey = process(g,secretKey,p); // public key g^secret mod p
+
+  console.log('DHParty instantiated', 'secretKey, publickey :', secretKey, ',', publicKey);
 
   this.getSecretKey = function () {
     return secretKey;
@@ -55,9 +53,4 @@ var g=23,
 
 
 log("we've made two parties with different secrets");
-log("(exposed here for illustration)");
-log('secret keys', A.getSecretKey(), B.getSecretKey());
-log('public keys', A.getPublicKey(), B.getPublicKey());
-log('bases (must be the same)', A.getBase(), B.getBase());
-log('moduli (must be the same)', A.getModulus(), B.getModulus());
-log('shared secrets (will be the same)', A.getSharedSecret(B.getPublicKey()), B.getSharedSecret(A.getPublicKey()));
+log('here is the magic - shared secrets will be the same!', A.getSharedSecret(B.getPublicKey()), B.getSharedSecret(A.getPublicKey()));
